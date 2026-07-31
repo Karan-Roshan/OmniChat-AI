@@ -1,2 +1,0 @@
-# OmniChat-AI
-OmniChat AI

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmniChat AI</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='6' fill='%2310a37f'/><path d='M19 4H5a2 2 0 0 0-2 2v14l4-4h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z' fill='white'/></svg>">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+        </svg>
+        OmniChat AI
+      </div>
+
+      <button class="new-chat-btn" id="newChatBtn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <line x1="5" y1="12" x2="19" y2="12" />
+        </svg>
+        New Conversation
+      </button>
+
+      <div class="section-label">Recent Conversations</div>
+
+      <div class="chat-history" id="chatHistory">
+        {% for chat in myChats %}
+        <div class="chat-item" data-id="{{ chat._id }}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
+          <span>{{ chat.title }}</span>
+          <button class="chat-delete-btn" title="Delete">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6" />
+              <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+              <path d="M10 11v6" />
+              <path d="M14 11v6" />
+              <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+            </svg>
+          </button>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-footer-item account">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+          </svg>
+          Account
+        </div>
+        <div class="sidebar-footer-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3" />
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14" />
+          </svg>
+          Settings & Preferences
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main">
+
+      <!-- Welcome -->
+      <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-heading">
+          <h1>How can OmniChat AI assist you today?</h1>
+          <p>Your intelligent AI assistant for research, productivity, coding, business insights, and everyday tasks.
+          </p>
+        </div>
+
+        <div class="cards-row">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon green">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="5" />
+                  <line x1="12" y1="1" x2="12" y2="3" />
+                  <line x1="12" y1="21" x2="12" y2="23" />
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                  <line x1="1" y1="12" x2="3" y2="12" />
+                  <line x1="21" y1="12" x2="23" y2="12" />
+                </svg>
+              </div>
+              Popular Use Cases
+            </div>
+            <div class="card-prompt" onclick="fillInput(this)">Generate a professional business proposal. →</div>
+            <div class="card-prompt" onclick="fillInput(this)">Analyze and summarize research documents. →</div>
+            <div class="card-prompt" onclick="fillInput(this)">Create optimized code for web applications. →</div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon blue">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                </svg>
+              </div>
+              Key Features
+            </div>
+            <div class="card-prompt">Understands context across conversations.</div>
+            <div class="card-prompt">Provides accurate and detailed responses.</div>
+            <div class="card-prompt">Supports coding, research, writing, and analysis.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon amber">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                  <line x1="12" y1="9" x2="12" y2="13" />
+                  <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+              </div>
+              Important Notes
+            </div>
+            <div class="card-prompt">Responses should be reviewed before critical decisions.</div>
+            <div class="card-prompt">AI-generated content may require human verification.</div>
+            <div class="card-prompt">Knowledge and recommendations may evolve over time.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat -->
+      <div class="chat-screen" id="chatScreen">
+        <div class="chat-topbar">
+          <div class="chat-model-badge">
+            <div class="model-dot"></div>
+            OmniChat - 3.5
+          </div>
+        </div>
+
+        <div class="chat-messages" id="chatMessages"></div>
+      </div>
+
+      <!-- Input area (always visible) -->
+      <div class="input-area">
+        <div class="input-wrapper">
+          <textarea class="input-box" id="questionInput" placeholder="Ask OmniChat AI anything..." rows="1"></textarea>
+          <button class="send-btn" id="sendButton" disabled>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13" />
+              <polygon points="22 2 15 22 11 13 2 9 22 2" />
+            </svg>
+          </button>
+        </div>
+        <div class="input-footer">
+          Research faster, write smarter, build better products, and automate your workflow with OmniChat AI.
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/js/main.js"></script>
+</body>
+
+</html>
